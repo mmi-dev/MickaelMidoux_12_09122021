@@ -1,0 +1,20 @@
+.sidebar {
+  position: relative;
+  width: 117px;
+  display: flex;
+  justify-content: space-around;
+  min-height: 100%;
+  background-color: black;
+  & .copyright {
+    position: absolute;
+    display: flex;
+    flex-wrap: nowrap;
+    bottom: 30px;
+    color: white;
+    font-size: 12px;
+    display: block;
+    transform: rotate(-90deg) translatex(50%);
+
+    min-width: 150px;
+  }
+}

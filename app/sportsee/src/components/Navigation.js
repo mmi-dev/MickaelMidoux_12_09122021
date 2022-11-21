@@ -1,23 +1,56 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Auth, AuthUser } from '../contexts/AuthContext';
 
 export default function Navigation() {
+  const { isAuthenticated } = useContext(Auth);
+  const { userId } = useContext(AuthUser);
+
+  let activeClassName = 'active';
+
   return (
-    <nav className="nav">
-      <ul className="nav-list">
-        <li className="nav-link">
-          <NavLink to="/" end>
+    <nav className="mainNav">
+      <ul className="mainNav-list">
+        <li className="mainNav-link">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              isActive ? activeClassName : undefined
+            }
+          >
             Accueil
           </NavLink>
         </li>
-        <li className="nav-link">
-          <NavLink to="/user/:userId/profil">Profil</NavLink>
+        <li className="mainNav-link">
+          <NavLink
+            to={isAuthenticated ? '/user/' + userId + '/profil' : '/'}
+            className={({ isActive }) =>
+              isActive ? activeClassName : undefined
+            }
+          >
+            Profil
+          </NavLink>
         </li>
-        <li className="nav-link">
-          <NavLink to="/settings">Réglage</NavLink>
+        <li className="mainNav-link">
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
+              isActive ? activeClassName : undefined
+            }
+          >
+            Réglage
+          </NavLink>
         </li>
-        <li className="nav-link">
-          <NavLink to="/community">Communauté</NavLink>
+        <li className="mainNav-link">
+          <NavLink
+            to="/community"
+            className={({ isActive }) =>
+              isActive ? activeClassName : undefined
+            }
+          >
+            Communauté
+          </NavLink>
         </li>
       </ul>
     </nav>
