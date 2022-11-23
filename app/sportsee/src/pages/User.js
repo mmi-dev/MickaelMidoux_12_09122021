@@ -4,6 +4,7 @@ import Auth from '../contexts/AuthContext';
 import UserData from '../contexts/UserDataContext';
 import useUserDetails from '../api/useUserDetails';
 import useUserActivity from '../api/useUserActivity';
+import useUserSessions from '../api/useUserSessions';
 import SimpleLoader from '../components/loader/SimpleLoader';
 
 const User = () => {
@@ -23,7 +24,7 @@ const User = () => {
     if (userDetailsData.data) {
       setFirstName(userDetailsData.data.userInfos.firstName);
     }
-  }, [userDetailsData]);
+  }, []);
 
   //user activity
   const userActivity = useUserActivity();
@@ -36,9 +37,20 @@ const User = () => {
         dailyActivity ? dailyActivity.map((e) => e.kilogram) : 'nothing'
       );
     }
-  }, [userActivityData]);
+  }, []);
 
   // user average sessions
+  const userSessions = useUserSessions();
+  const [sessions, setSessions] = useState('');
+  useEffect(() => {
+    if (userSessionsData.data) {
+      setSessions(userSessionsData.data.sessions);
+      console.log(sessions);
+      console.log(
+        sessions ? sessions.map((e) => e) : 'nothing'
+      );
+    }
+  }, []);
 
   // user performance
 
@@ -74,6 +86,23 @@ const User = () => {
                         <li key={i}>
                           {activity.day}_{activity.kilogram}'Kgs'-
                           {activity.calories}'calories'
+                        </li>
+                      );
+                    })
+                  : 'no data'}
+              </div>
+            )}
+          </section>
+          <section>
+            <h2>sessions</h2>
+            {userSessions.loading && <SimpleLoader />}
+            {!userSessions.loading && (
+              <div>
+                {sessions
+                  ? sessions.map((session, i) => {
+                      return (
+                        <li key={i}>
+                          {session.day}_{session.sessionLength}'min'
                         </li>
                       );
                     })
