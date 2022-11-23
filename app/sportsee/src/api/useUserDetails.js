@@ -26,9 +26,13 @@ function useUserDetails(timeout = 0) {
     };
 
     // simulate awaiting server response
-    setTimeout(() => {
-      (async () => await fetchApi())();
-    }, timeout);
+    if (!userDetailsData) {
+      setTimeout(() => {
+        (async () => await fetchApi())();
+      }, timeout);
+    } else {
+      setIsLoading(false);
+    }
   }, []);
 
   return { data: userDetailsData, error: fetchError, loading: isLoading };

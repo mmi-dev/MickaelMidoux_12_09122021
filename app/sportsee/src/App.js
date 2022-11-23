@@ -15,13 +15,19 @@ import Auth from './contexts/AuthContext';
 import UserData from './contexts/UserDataContext';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userId, setUserId] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    sessionStorage.getItem('isAuthenticated')
+      ? sessionStorage.getItem('isAuthenticated')
+      : false
+  );
+  const [userId, setUserId] = useState(
+    sessionStorage.getItem('userId') ? sessionStorage.getItem('userId') : null
+  );
 
-  const [userDetailsData, setUserDetailsData] = useState({});
-  const [userActivityData, setUserActivityData] = useState({});
-  const [userPerformanceData, setUserPerformanceData] = useState({});
-  const [userSessionsData, setUserSessionsData] = useState({});
+  const [userDetailsData, setUserDetailsData] = useState();
+  const [userActivityData, setUserActivityData] = useState();
+  const [userPerformanceData, setUserPerformanceData] = useState();
+  const [userSessionsData, setUserSessionsData] = useState();
 
   return (
     <Auth.Provider

@@ -8,17 +8,22 @@ import SimpleLoader from '../components/loader/SimpleLoader';
 const Profil = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Auth);
   const { setUserId } = useContext(Auth);
+  const {
+    userDetailsData,
+    setUserDetailsData,
+    setUserActivityData,
+    setUserPerformanceData,
+    setUserSessionsData,
+  } = useContext(UserData);
 
   const userDetails = useUserDetails(2000);
-
-  const { userDetailsData } = useContext(UserData);
 
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [age, setAge] = useState('');
 
   useEffect(() => {
-    if (userDetailsData.data) {
+    if (userDetailsData) {
       setLastName(userDetailsData.data.userInfos.lastName);
       setFirstName(userDetailsData.data.userInfos.firstName);
       setAge(userDetailsData.data.userInfos.age);
@@ -76,7 +81,13 @@ const Profil = () => {
                   e.preventDefault();
                   setIsAuthenticated(false);
                   setUserId('');
+                  sessionStorage.removeItem('isAuthenticated');
+                  sessionStorage.removeItem('userId');
 
+                  setUserDetailsData();
+                  setUserActivityData();
+                  setUserPerformanceData();
+                  setUserSessionsData();
                   navigate('/');
                 }}
               >

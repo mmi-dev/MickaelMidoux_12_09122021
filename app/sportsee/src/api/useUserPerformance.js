@@ -26,9 +26,13 @@ function useUserPerformance(timeout = 0) {
     };
 
     // simulate awaiting server response
-    setTimeout(() => {
-      (async () => await fetchApi())();
-    }, timeout);
+    if (!userPerformanceData) {
+      setTimeout(() => {
+        (async () => await fetchApi())();
+      }, timeout);
+    } else {
+      setIsLoading(false);
+    }
   }, []);
 
   return { data: userPerformanceData, error: fetchError, loading: isLoading };

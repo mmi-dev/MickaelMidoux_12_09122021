@@ -43,19 +43,19 @@ const User = () => {
   const [performanceName, setPerformanceName] = useState('');
 
   useEffect(() => {
-    if (userDetailsData.data) {
+    if (userDetailsData) {
       setFirstName(userDetailsData.data.userInfos.firstName);
       setTodayScore(userDetailsData.data.score);
       setKeyDataKeys(Object.keys(userDetailsData.data.keyData));
       setKeyData(userDetailsData.data.keyData);
     }
-    if (userActivityData.data) {
+    if (userActivityData) {
       setDailyActivity(userActivityData.data.sessions);
     }
-    if (userSessionsData.data) {
+    if (userSessionsData) {
       setSessions(userSessionsData.data.sessions);
     }
-    if (userPerformanceData.data) {
+    if (userPerformanceData) {
       setPerformanceData(userPerformanceData.data.data);
       setPerformanceName(userPerformanceData.data.kind);
     }

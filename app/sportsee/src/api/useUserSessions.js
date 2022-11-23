@@ -26,9 +26,13 @@ function useUserSessions(timeout = 0) {
     };
 
     // simulate awaiting server response
-    setTimeout(() => {
-      (async () => await fetchApi())();
-    }, timeout);
+    if (!userSessionsData) {
+      setTimeout(() => {
+        (async () => await fetchApi())();
+      }, timeout);
+    } else {
+      setIsLoading(false);
+    }
   }, []);
 
   return { data: userSessionsData, error: fetchError, loading: isLoading };

@@ -26,9 +26,13 @@ function useUserActivity(timeout = 0) {
     };
 
     // simulate awaiting server response
-    setTimeout(() => {
-      (async () => await fetchApi())();
-    }, timeout);
+    if (!userActivityData) {
+      setTimeout(() => {
+        (async () => await fetchApi())();
+      }, timeout);
+    } else {
+      setIsLoading(false);
+    }
   }, []);
 
   return { data: userActivityData, error: fetchError, loading: isLoading };
