@@ -8,7 +8,7 @@ import SimpleLoader from '../components/loader/SimpleLoader';
 const User = () => {
   const { isAuthenticated } = useContext(Auth);
 
-  const userDetails = useUserDetails(5000);
+  const userDetails = useUserDetails(3000);
 
   const {
     userDetailsData,
