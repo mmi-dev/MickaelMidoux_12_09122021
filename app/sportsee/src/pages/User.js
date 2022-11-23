@@ -5,6 +5,7 @@ import UserData from '../contexts/UserDataContext';
 import useUserDetails from '../api/useUserDetails';
 import useUserActivity from '../api/useUserActivity';
 import useUserSessions from '../api/useUserSessions';
+import useUserPerformance from '../api/useUserPerformance';
 import SimpleLoader from '../components/loader/SimpleLoader';
 
 const User = () => {
@@ -13,16 +14,18 @@ const User = () => {
   const {
     userDetailsData,
     userActivityData,
-    userProfilData,
+    userPerformanceData,
     userSessionsData,
   } = useContext(UserData);
 
   //user details
   const userDetails = useUserDetails(2000);
   const [firstName, setFirstName] = useState('');
+  const [todayScore, setTodayScore] = useState('');
   useEffect(() => {
     if (userDetailsData.data) {
       setFirstName(userDetailsData.data.userInfos.firstName);
+      setTodayScore(userDetailsData.data.score);
     }
   }, []);
 
@@ -32,10 +35,6 @@ const User = () => {
   useEffect(() => {
     if (userActivityData.data) {
       setDailyActivity(userActivityData.data.sessions);
-      console.log(dailyActivity);
-      console.log(
-        dailyActivity ? dailyActivity.map((e) => e.kilogram) : 'nothing'
-      );
     }
   }, []);
 
@@ -45,14 +44,19 @@ const User = () => {
   useEffect(() => {
     if (userSessionsData.data) {
       setSessions(userSessionsData.data.sessions);
-      console.log(sessions);
-      console.log(
-        sessions ? sessions.map((e) => e) : 'nothing'
-      );
     }
   }, []);
 
   // user performance
+  const userPerformance = useUserPerformance();
+  const [performanceData, setPerformanceData] = useState('');
+  const [performanceName, setPerformanceName] = useState('');
+  useEffect(() => {
+    if (userPerformanceData.data) {
+      setPerformanceData(userPerformanceData.data.data);
+      setPerformanceName(userPerformanceData.data.kind);
+    }
+  }, []);
 
   // category
   const [searchParams] = useSearchParams();
@@ -109,6 +113,29 @@ const User = () => {
                   : 'no data'}
               </div>
             )}
+          </section>
+          <section>
+            <h2>performance</h2>
+            {userPerformance.loading && <SimpleLoader />}
+            {!userPerformance.loading && (
+              <div>
+                {performanceData
+                  ? performanceData.map((performance, i) => {
+                      return (
+                        <li key={i}>
+                          {performanceName[performance.kind]}_
+                          {performance.value}
+                        </li>
+                      );
+                    })
+                  : 'no data'}
+              </div>
+            )}
+          </section>
+          <section>
+            <h2>score</h2>
+            {userDetails.loading && <SimpleLoader />}
+            {!userDetails.loading && <div>{todayScore}</div>}
           </section>
         </>
       )}
