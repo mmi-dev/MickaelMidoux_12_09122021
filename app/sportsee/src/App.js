@@ -17,8 +17,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userId, setUserId] = useState('');
 
-
-
   isAuthenticated ? console.log('auth ok') : console.log('auth ???');
   return (
     <Auth.Provider
@@ -29,12 +27,33 @@ function App() {
         <div className="container">
           <SideBar />
           <Routes>
-            <Route path="/" element={isAuthenticated ? <Navigate to={"/user/"+userId}/> : <Login />} />
+            <Route
+              path="/"
+              element={
+                isAuthenticated ? (
+                  <Navigate to={'/user/' + userId} />
+                ) : (
+                  <Login />
+                )
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/community" element={<Community />} />
-            <Route path="/user" element={isAuthenticated ? <Navigate to={"/user/"+userId}/> : <Navigate to={"/login"}/> } />
-            <Route path="/user/:userId" element={isAuthenticated ? <User /> : <Navigate to={"/login"}/> } />
+            <Route
+              path="/user"
+              element={
+                isAuthenticated ? (
+                  <Navigate to={'/user/' + userId} />
+                ) : (
+                  <Navigate to={'/login'} />
+                )
+              }
+            />
+            <Route
+              path="/user/:userId"
+              element={isAuthenticated ? <User /> : <Navigate to={'/login'} />}
+            />
             <Route path="/user/:userId/profil" element={<Profil />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>

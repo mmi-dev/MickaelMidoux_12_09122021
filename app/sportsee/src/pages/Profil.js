@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Auth } from '../contexts/Context';
 
 const Profil = () => {
-  const {  setIsAuthenticated } = useContext(Auth);
+  const { setIsAuthenticated } = useContext(Auth);
   const { userId, setUserId } = useContext(Auth);
 
   const navigate = useNavigate();
@@ -14,11 +14,11 @@ const Profil = () => {
       <form>
         <button
           onClick={(e) => {
-            e.preventDefault()
+            e.preventDefault();
             setIsAuthenticated(false);
             setUserId('');
 
-      navigate('/');
+            navigate('/');
           }}
         >
           {' '}
