@@ -7,6 +7,10 @@ import useUserActivity from '../api/useUserActivity';
 import useUserSessions from '../api/useUserSessions';
 import useUserPerformance from '../api/useUserPerformance';
 import SimpleLoader from '../components/loader/SimpleLoader';
+import calorieCount from '../assets/icons/calories-icon.png';
+import proteinCount from '../assets/icons/protein-icon.png';
+import carbohydrateCount from '../assets/icons/carbs-icon.png';
+import lipidCount from '../assets/icons/fat-icon.png';
 
 const User = () => {
   const { isAuthenticated } = useContext(Auth);
@@ -22,41 +26,45 @@ const User = () => {
   const userDetails = useUserDetails(2000);
   const [firstName, setFirstName] = useState('');
   const [todayScore, setTodayScore] = useState('');
+  const [keyData, setKeyData] = useState('');
+  const [keyDataKeys, setKeyDataKeys] = useState('');
+
+  //user activity
+  const userActivity = useUserActivity(3000);
+  const [dailyActivity, setDailyActivity] = useState('');
+
+  // user average sessions
+  const userSessions = useUserSessions(5000);
+  const [sessions, setSessions] = useState('');
+
+  // user performance
+  const userPerformance = useUserPerformance(4000);
+  const [performanceData, setPerformanceData] = useState('');
+  const [performanceName, setPerformanceName] = useState('');
+
   useEffect(() => {
     if (userDetailsData.data) {
       setFirstName(userDetailsData.data.userInfos.firstName);
       setTodayScore(userDetailsData.data.score);
+      setKeyDataKeys(Object.keys(userDetailsData.data.keyData));
+      setKeyData(userDetailsData.data.keyData);
     }
-  }, []);
-
-  //user activity
-  const userActivity = useUserActivity();
-  const [dailyActivity, setDailyActivity] = useState('');
-  useEffect(() => {
     if (userActivityData.data) {
       setDailyActivity(userActivityData.data.sessions);
     }
-  }, []);
-
-  // user average sessions
-  const userSessions = useUserSessions();
-  const [sessions, setSessions] = useState('');
-  useEffect(() => {
     if (userSessionsData.data) {
       setSessions(userSessionsData.data.sessions);
     }
-  }, []);
-
-  // user performance
-  const userPerformance = useUserPerformance();
-  const [performanceData, setPerformanceData] = useState('');
-  const [performanceName, setPerformanceName] = useState('');
-  useEffect(() => {
     if (userPerformanceData.data) {
       setPerformanceData(userPerformanceData.data.data);
       setPerformanceName(userPerformanceData.data.kind);
     }
-  }, []);
+  }, [
+    userDetailsData,
+    userActivityData,
+    userPerformanceData,
+    userSessionsData,
+  ]);
 
   // category
   const [searchParams] = useSearchParams();
@@ -136,6 +144,24 @@ const User = () => {
             <h2>score</h2>
             {userDetails.loading && <SimpleLoader />}
             {!userDetails.loading && <div>{todayScore}</div>}
+          </section>
+          <section>
+            <h2>keydata</h2>
+            {userDetails.loading && <SimpleLoader />}
+            {!userDetails.loading && (
+              <>
+                {keyDataKeys
+                  ? keyDataKeys.map((keys, i) => {
+                      return (
+                        <div key={i}>
+                          <div>{keys}</div>
+                          <div>{keyData[keys]}</div>
+                        </div>
+                      );
+                    })
+                  : ''}
+              </>
+            )}
           </section>
         </>
       )}
