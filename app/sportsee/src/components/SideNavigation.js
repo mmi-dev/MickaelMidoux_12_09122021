@@ -4,11 +4,11 @@ import relaxation from '../assets/icons/relaxation.png';
 import swimming from '../assets/icons/swimming.png';
 import cycling from '../assets/icons/cycling.png';
 import bodybuilding from '../assets/icons/bodybuilding.png';
-import { Auth, AuthUser } from '../contexts/AuthContext';
+import { Auth } from '../contexts/Context';
 
 export default function SideNavigation() {
   const { isAuthenticated } = useContext(Auth);
-  const { userId } = useContext(AuthUser);
+  const { userId } = useContext(Auth);
 
   let activeClassName = 'active';
 

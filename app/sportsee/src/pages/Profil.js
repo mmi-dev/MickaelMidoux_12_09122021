@@ -1,27 +1,24 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Auth, AuthUser } from '../contexts/AuthContext';
+import { Auth } from '../contexts/Context';
 
 const Profil = () => {
-  const { isAuthenticated, setIsAuthenticated } = useContext(Auth);
-  const { userId, setUserId } = useContext(AuthUser);
+  const {  setIsAuthenticated } = useContext(Auth);
+  const { userId, setUserId } = useContext(Auth);
 
-  // redirection if not authentificated
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/');
-    }
-  }, [isAuthenticated, navigate]);
 
   return (
     <main>
       <h1>Profil user : {userId}</h1>
       <form>
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault()
             setIsAuthenticated(false);
             setUserId('');
+
+      navigate('/');
           }}
         >
           {' '}

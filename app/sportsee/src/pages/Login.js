@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Auth, AuthUser } from '../contexts/AuthContext';
+import ApiDatas from '../api/ApiDatas';
+import { Auth } from '../contexts/Context';
 
 const Login = () => {
   const { setIsAuthenticated } = useContext(Auth);
-  const { setUserId } = useContext(AuthUser);
+  const { setUserId } = useContext(Auth);
 
   return (
     <main>
@@ -33,6 +34,7 @@ const Login = () => {
           </Link>
         </li>
       </ul>
+      <ApiDatas />
     </main>
   );
 };

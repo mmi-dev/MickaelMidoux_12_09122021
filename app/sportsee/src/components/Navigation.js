@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Auth, AuthUser } from '../contexts/AuthContext';
+import { Auth } from '../contexts/Context';
 
 export default function Navigation() {
   const { isAuthenticated } = useContext(Auth);
-  const { userId } = useContext(AuthUser);
+  const { userId } = useContext(Auth);
 
   let activeClassName = 'active';
 

@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Auth, AuthUser } from '../contexts/AuthContext';
+import UserData from '../components/UserData';
+import FetchApi from '../api/ApiDatas';
+import { Auth } from '../contexts/Context';
 
 const User = () => {
   const { isAuthenticated } = useContext(Auth);
-  const { userId } = useContext(AuthUser);
+  const { userId } = useContext(Auth);
 
   // category
   const [searchParams] = useSearchParams();
@@ -22,6 +24,7 @@ const User = () => {
     <main>
       <h1>User: {userId}</h1>
       <p>{category}</p>
+      <FetchApi />
     </main>
   );
 };
