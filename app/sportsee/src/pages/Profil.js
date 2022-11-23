@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Auth } from '../contexts/Context';
+import Auth from '../contexts/AuthContext';
 
 const Profil = () => {
   const { setIsAuthenticated } = useContext(Auth);

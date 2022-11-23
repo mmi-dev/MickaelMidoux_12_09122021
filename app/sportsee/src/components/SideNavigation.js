@@ -4,7 +4,7 @@ import relaxation from '../assets/icons/relaxation.png';
 import swimming from '../assets/icons/swimming.png';
 import cycling from '../assets/icons/cycling.png';
 import bodybuilding from '../assets/icons/bodybuilding.png';
-import { Auth } from '../contexts/Context';
+import Auth from '../contexts/AuthContext';
 
 export default function SideNavigation() {
   const { isAuthenticated } = useContext(Auth);

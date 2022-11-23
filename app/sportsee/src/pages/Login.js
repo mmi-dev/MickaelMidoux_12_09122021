@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import ApiDatas from '../api/ApiDatas';
-import { Auth } from '../contexts/Context';
+import Auth from '../contexts/AuthContext';
 
 const Login = () => {
   const { setIsAuthenticated } = useContext(Auth);
@@ -34,7 +33,6 @@ const Login = () => {
           </Link>
         </li>
       </ul>
-      <ApiDatas />
     </main>
   );
 };
