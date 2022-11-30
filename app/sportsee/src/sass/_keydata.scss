@@ -1,0 +1,33 @@
+#keydata {
+  & .keydata {
+    &-title {
+      display: none;
+    }
+    &-container {
+      display: flex;
+      background-color: #fbfbfb;
+      padding: 0 32px;
+      border-radius: 5px;
+      gap: 24px;
+      align-items: center;
+      flex-grow: 1;
+    }
+    &-icon {
+      width: 60px;
+    }
+    &-data {
+      display: flex;
+      flex-direction: column;
+    }
+    &-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #282d30;
+    }
+    &-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #74798c;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "calorieCount": {
+    "name": "Calories",
+    "unit": "kCal",
+    "icon": "../assets/icons/calories-icon.png"
+  },
+  "proteinCount": {
+    "name": "Proteines",
+    "unit": "g",
+    "icon": "../assets/icons/protein-icon.png"
+  },
+  "carbohydrateCount": {
+    "name": "Glucides",
+    "unit": "g",
+    "icon": "../assets/icons/carbs-icon.png"
+  },
+  "lipidCount": {
+    "name": "Lipides",
+    "unit": "g",
+    "icon": "../assets/icons/fat-icon.png"
+  }
+}

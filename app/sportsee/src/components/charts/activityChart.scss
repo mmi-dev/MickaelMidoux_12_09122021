@@ -1,0 +1,80 @@
+#activity-chart-container {
+  position: relative;
+
+  & .activity-chart-title {
+    position: absolute;
+    z-index: 1;
+    font-size: 15px;
+    top: 24px;
+    left: 32px;
+  }
+
+  .recharts-wrapper {
+    background-color: #fbfbfb;
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
+
+  & .recharts {
+    &-cartesian {
+      &-axis-tick-line {
+        display: none;
+      }
+      &-axis-ticks {
+        font-size: 14px;
+        font-weight: 500;
+        color: #9b9eac;
+      }
+      &-axis-line {
+        stroke: #dedede;
+      }
+      &-axis-line .yAxis {
+        display: none;
+      }
+      &-grid line {
+        stroke: #dedede;
+      }
+    }
+    &-legend {
+      &-wrapper {
+        margin-top: -35px;
+      }
+      &-item {
+        margin-left: 20px;
+      }
+      &-item-text {
+        color: #74798c !important;
+      }
+      &-item-text,
+      .recharts-text tspan {
+        font-size: 14px;
+        color: #74798c;
+        margin-left: 10px;
+      }
+    }
+    & .recharts-default-tooltip {
+      background-color: #e60000 !important;
+    }
+    &-tooltip {
+      &-label {
+        display: none;
+      }
+      &-item-name {
+        display: none;
+      }
+      &-item-separator {
+        display: none;
+      }
+      &-item-value {
+        color: white;
+        font-size: 7px;
+        line-height: 24px;
+      }
+      &-item-unit {
+        color: white;
+        font-size: 7px;
+        line-height: 24px;
+      }
+    }
+  }
+}

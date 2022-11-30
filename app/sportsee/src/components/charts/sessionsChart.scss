@@ -1,0 +1,73 @@
+#sessions-chart-container {
+  position: relative;
+
+  & .sessions-chart-title {
+    position: absolute;
+    text-align: left;
+    z-index: 1;
+    font-size: 15px;
+    top: 24px;
+    left: 32px;
+    color: #ffffff;
+    width: 70%;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+  }
+  & .recharts {
+    &-cartesian {
+      &-axis-tick {
+        &-line {
+          display: none;
+        }
+        &-value {
+          fill: #ffffff;
+
+          mix-blend-mode: normal;
+          opacity: 0.5;
+        }
+      }
+      &-axis-line {
+        display: none;
+      }
+    }
+    &-wrapper {
+      background-color: #ff0000;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+    &-line path {
+      stroke: #ffffff;
+
+      mix-blend-mode: normal;
+      opacity: 0.5;
+    }
+    & .recharts-default-tooltip {
+      background-color: #fff !important;
+      border: 0px !important;
+    }
+    &-tooltip {
+      &-wrapper {
+        border: none !important;
+      }
+      &-label {
+        display: none;
+      }
+      &-item-name {
+        display: none;
+      }
+      &-item-separator {
+        display: none;
+      }
+      &-item-value {
+        color: black;
+        font-size: 7px;
+        line-height: 24px;
+      }
+      &-item-unit {
+        color: black;
+        font-size: 7px;
+        line-height: 24px;
+      }
+    }
+  }
+}

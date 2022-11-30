@@ -1,6 +1,7 @@
 .sidebar {
   position: relative;
   width: 117px;
+  flex-grow: 0;
   display: flex;
   justify-content: space-around;
   min-height: 100%;

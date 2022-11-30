@@ -11,6 +11,12 @@ import calorieCount from '../assets/icons/calories-icon.png';
 import proteinCount from '../assets/icons/protein-icon.png';
 import carbohydrateCount from '../assets/icons/carbs-icon.png';
 import lipidCount from '../assets/icons/fat-icon.png';
+import ActivityChart from '../components/charts/ActivityChart';
+import SessionsChart from '../components/charts/SessionsChart';
+import PerformanceChart from '../components/charts/PerformanceChart';
+import ScoreChart from '../components/charts/ScoreChart';
+import KeyData from '../components/KeyData';
+import keyDataRef from '../data/keyDataRef.json';
 
 const User = () => {
   const { isAuthenticated } = useContext(Auth);
@@ -27,7 +33,6 @@ const User = () => {
   const [firstName, setFirstName] = useState('');
   const [todayScore, setTodayScore] = useState('');
   const [keyData, setKeyData] = useState('');
-  const [keyDataKeys, setKeyDataKeys] = useState('');
 
   //user activity
   const userActivity = useUserActivity(3000);
@@ -46,7 +51,6 @@ const User = () => {
     if (userDetailsData) {
       setFirstName(userDetailsData.data.userInfos.firstName);
       setTodayScore(userDetailsData.data.score);
-      setKeyDataKeys(Object.keys(userDetailsData.data.keyData));
       setKeyData(userDetailsData.data.keyData);
     }
     if (userActivityData) {
@@ -70,6 +74,112 @@ const User = () => {
   const [searchParams] = useSearchParams();
   let category = searchParams.get('category');
 
+  //  activity chart settings
+  const activityChartData = dailyActivity
+    ? dailyActivity.map((activity, i) => {
+        return {
+          date: new Date(activity.day).getDate().toString(),
+          'Poids (kg)': activity.kilogram,
+          'Calories brulées (kCal)': activity.calories,
+        };
+      })
+    : null;
+  const activityChartWeightDomainMin = dailyActivity
+    ? Math.min(
+        ...dailyActivity.map((activity, i) => {
+          return activity.kilogram;
+        })
+      ) - 1
+    : null;
+  const activityChartWeightDomainMax = dailyActivity
+    ? Math.max(
+        ...dailyActivity.map((activity, i) => {
+          return activity.kilogram;
+        })
+      ) + 1
+    : null;
+  const activityChartCaloryDomainMin = dailyActivity
+    ? Math.min(
+        ...dailyActivity.map((activity, i) => {
+          return activity.calories;
+        })
+      ) * 0.6
+    : null;
+  const activityChartCaloryDomainMax = dailyActivity
+    ? Math.max(
+        ...dailyActivity.map((activity, i) => {
+          return activity.calories;
+        })
+      ) * 1.1
+    : null;
+
+  // session chart settings
+  const weekDays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  const sessionsChartData = sessions
+    ? sessions.map((session, i) => {
+        return {
+          day: weekDays[session.day - 1],
+          time: session.sessionLength,
+        };
+      })
+    : null;
+  const sessionsChartSessionDomainMin = sessions
+    ? Math.min(
+        ...sessions.map((session, i) => {
+          return session.sessionLength;
+        })
+      ) * 0.6
+    : null;
+  const sessionsChartSessionDomainMax = sessions
+    ? Math.max(
+        ...sessions.map((session, i) => {
+          return session.sessionLength;
+        })
+      ) * 1.1
+    : null;
+
+  // performance chart settings
+  const performanceNameTraduction = {
+    cardio: 'Cardio',
+    energy: 'Energie',
+    endurance: 'Endurance',
+    strength: 'Force',
+    speed: 'Vitesse',
+    intensity: 'Intensité',
+  };
+  const performanceChartData = performanceData
+    ? performanceData.map((performance, i) => {
+        return {
+          activity:
+            performanceNameTraduction[performanceName[performance.kind]],
+          score: performance.value,
+        };
+      })
+    : null;
+
+  // score chart settings
+  const startAngle = 180;
+  const scoreValue = todayScore;
+
+  // key data settings
+  const keyDataIconsMapping = {
+    calorieCount: calorieCount,
+    proteinCount: proteinCount,
+    carbohydrateCount: carbohydrateCount,
+    lipidCount: lipidCount,
+  };
+  const keyDataList = keyData
+    ? Object.keys(keyData).map((key) => {
+        return {
+          key: key,
+          value: keyData[key],
+          name: keyDataRef[key].name,
+          unit: keyDataRef[key].unit,
+          icon: keyDataIconsMapping[key],
+        };
+      })
+    : [];
+
   // redirection if not authentificated
   const navigate = useNavigate();
   useEffect(() => {
@@ -83,86 +193,148 @@ const User = () => {
       {userDetails.loading && <SimpleLoader />}
       {!userDetails.loading && (
         <>
-          <h1>
-            Bonjour <span className="firstname">{firstName}</span>{' '}
-          </h1>
-          <p>{category}</p>
-          <section>
-            <h2>activity</h2>
-            {userActivity.loading && <SimpleLoader />}
-            {!userActivity.loading && (
-              <div>
-                {dailyActivity
-                  ? dailyActivity.map((activity, i) => {
-                      return (
-                        <li key={i}>
-                          {activity.day}_{activity.kilogram}'Kgs'-
-                          {activity.calories}'calories'
-                        </li>
-                      );
-                    })
-                  : 'no data'}
-              </div>
-            )}
-          </section>
-          <section>
-            <h2>sessions</h2>
-            {userSessions.loading && <SimpleLoader />}
-            {!userSessions.loading && (
-              <div>
-                {sessions
-                  ? sessions.map((session, i) => {
-                      return (
-                        <li key={i}>
-                          {session.day}_{session.sessionLength}'min'
-                        </li>
-                      );
-                    })
-                  : 'no data'}
-              </div>
-            )}
-          </section>
-          <section>
-            <h2>performance</h2>
-            {userPerformance.loading && <SimpleLoader />}
-            {!userPerformance.loading && (
-              <div>
-                {performanceData
-                  ? performanceData.map((performance, i) => {
-                      return (
-                        <li key={i}>
-                          {performanceName[performance.kind]}_
-                          {performance.value}
-                        </li>
-                      );
-                    })
-                  : 'no data'}
-              </div>
-            )}
-          </section>
-          <section>
-            <h2>score</h2>
-            {userDetails.loading && <SimpleLoader />}
-            {!userDetails.loading && <div>{todayScore}</div>}
-          </section>
-          <section>
-            <h2>keydata</h2>
-            {userDetails.loading && <SimpleLoader />}
-            {!userDetails.loading && (
-              <>
-                {keyDataKeys
-                  ? keyDataKeys.map((keys, i) => {
-                      return (
-                        <div key={i}>
-                          <div>{keys}</div>
-                          <div>{keyData[keys]}</div>
-                        </div>
-                      );
-                    })
-                  : ''}
-              </>
-            )}
-          </section>
+          <div className="dashboard-title">
+            <h1>
+              Bonjour <span className="firstname">{firstName}</span>
+            </h1>
+
+            <div className="congratulations-message">
+              {category ? (
+                <h3 className="congratulations-category">{category}</h3>
+              ) : null}
+              <span className="congratulations-text">
+                Félicitation ! Vous avez explosé vos objectifs hier &#128079;
+              </span>
+            </div>
+          </div>
+          <div className="dashboard-content">
+            <article id="charts" className="dashboard-charts">
+              {/* activity charts */}
+              <section
+                id="activity-chart-container"
+                className="activity-chart-container"
+                style={{ position: 'relative', width: '100%' }}
+              >
+                {userActivity.loading && <SimpleLoader />}
+                {!userActivity.loading && (
+                  <ActivityChart
+                    title="Activité quotidienne"
+                    settings={{
+                      weightDomain: [
+                        activityChartWeightDomainMin,
+                        activityChartWeightDomainMax,
+                      ],
+                      caloryDomain: [
+                        activityChartCaloryDomainMin,
+                        activityChartCaloryDomainMax,
+                      ],
+                      width: document.getElementById('activity-chart-container')
+                        ? document.getElementById('activity-chart-container')
+                            .offsetWidth
+                        : null,
+                      height: document.getElementById(
+                        'activity-chart-container'
+                      )
+                        ? document.getElementById('activity-chart-container')
+                            .offsetHeight
+                        : null,
+                    }}
+                    data={activityChartData}
+                  />
+                )}
+              </section>
+              {/* sessions charts */}
+              <section
+                id="sessions-chart-container"
+                className="sessions-chart-container"
+              >
+                {userSessions.loading && <SimpleLoader />}
+                {!userSessions.loading && (
+                  <SessionsChart
+                    title={'Durée moyanne des sessions'}
+                    settings={{
+                      sessionDomain: [
+                        sessionsChartSessionDomainMin,
+                        sessionsChartSessionDomainMax,
+                      ],
+                      width: document.getElementById('sessions-chart-container')
+                        ? document.getElementById('sessions-chart-container')
+                            .offsetWidth
+                        : null,
+                      height: document.getElementById(
+                        'sessions-chart-container'
+                      )
+                        ? document.getElementById('sessions-chart-container')
+                            .offsetHeight
+                        : null,
+                    }}
+                    data={sessionsChartData}
+                  />
+                )}
+              </section>
+              {/* performane charts */}
+              <section
+                id="performance-chart-container"
+                className="performance-chart-container"
+              >
+                {userPerformance.loading && <SimpleLoader />}
+                {!userPerformance.loading && (
+                  <PerformanceChart
+                    title={'Performances'}
+                    settings={{
+                      performanceDomain: [0, 250],
+                      width: document.getElementById(
+                        'performance-chart-container'
+                      )
+                        ? document.getElementById('performance-chart-container')
+                            .offsetWidth
+                        : null,
+                      height: document.getElementById(
+                        'performance-chart-container'
+                      )
+                        ? document.getElementById('performance-chart-container')
+                            .offsetHeight
+                        : null,
+                    }}
+                    data={performanceChartData}
+                  />
+                )}
+              </section>
+              {/* score charts */}
+              <section
+                id="score-chart-container"
+                className="score-chart-container"
+              >
+                {userDetails.loading && <SimpleLoader />}
+                {!userDetails.loading && (
+                  <ScoreChart
+                    title={'Score'}
+                    settings={{
+                      startAngle: startAngle,
+                      endAngle: startAngle - 360 * scoreValue,
+                      width: document.getElementById('score-chart-container')
+                        ? document.getElementById('score-chart-container')
+                            .offsetWidth
+                        : null,
+                      height: document.getElementById('score-chart-container')
+                        ? document.getElementById('score-chart-container')
+                            .offsetHeight
+                        : null,
+                    }}
+                    data={[{ name: 'Score', value: scoreValue }]}
+                  />
+                )}
+              </section>
+            </article>
+            <aside id="keydata" className="dashboard-keydata">
+              {userDetails.loading && <SimpleLoader />}
+              {!userDetails.loading && (
+                <>
+                  <KeyData title={'Chiffres clés'} data={keyDataList} />
+                </>
+              )}
+            </aside>
+          </div>
         </>
       )}
     </main>
