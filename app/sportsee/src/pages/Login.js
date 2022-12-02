@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../contexts/AuthContext';
+import user from '../assets/icons/user.svg';
 
 const Login = () => {
   const { setIsAuthenticated, setUserId } = useContext(Auth);
@@ -8,8 +9,8 @@ const Login = () => {
   return (
     <main>
       <h1>Connexion</h1>
-      <ul>
-        <li>
+      <ul className="user-list">
+        <li className="user-item">
           <Link
             onClick={() => {
               setIsAuthenticated(true);
@@ -19,10 +20,11 @@ const Login = () => {
             }}
             to="/user/18"
           >
-            User 1
+            <img src={user} alt="utilisateur 1" />
+            <div className="user-name">Cecilia</div>
           </Link>
         </li>
-        <li>
+        <li className="user-item">
           <Link
             onClick={() => {
               setIsAuthenticated(true);
@@ -32,7 +34,8 @@ const Login = () => {
             }}
             to="/user/12"
           >
-            User 2
+            <img src={user} alt="utilisateur 2" />
+            <div className="user-name">Karl</div>
           </Link>
         </li>
       </ul>

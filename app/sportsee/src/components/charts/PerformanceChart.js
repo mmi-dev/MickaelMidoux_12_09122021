@@ -13,13 +13,13 @@ function PerformanceChart(props) {
   return (
     <>
       <h2 className="performance-chart-title">{props.title}</h2>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="99%" height="99%">
         <RadarChart
           margin={{
             top: 15,
-            right: 15,
+            right: 30,
             bottom: 15,
-            left: 15,
+            left: 30,
           }}
           width={'100%'}
           height={'100%'}

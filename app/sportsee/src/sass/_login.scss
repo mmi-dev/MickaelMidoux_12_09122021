@@ -1,0 +1,20 @@
+.user-list {
+  display: flex;
+  & .user-item {
+    padding: 20px 50px;
+    text-align: center;
+    text-decoration: none;
+    color: #546f7a;
+    font-size: 18px;
+    font-weight: 500;
+    & a {
+      text-decoration: none;
+      &:visited {
+        color: inherit;
+      }
+    }
+    & img {
+      width: 100px;
+    }
+  }
+}

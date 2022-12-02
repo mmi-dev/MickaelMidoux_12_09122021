@@ -4,6 +4,8 @@ import Auth from '../contexts/AuthContext';
 import UserData from '../contexts/UserDataContext';
 import useUserDetails from '../api/useUserDetails';
 import SimpleLoader from '../components/loader/SimpleLoader';
+import logout from '../assets/icons/logout.svg';
+import profil from '../assets/icons/profil-picture.svg';
 
 const Profil = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Auth);
@@ -44,8 +46,11 @@ const Profil = () => {
       {!userDetails.loading && (
         <>
           <h1>Profil</h1>
-          <form>
-            <div className="lastname">
+          <form className="profil-data">
+            <div className="profil-picture">
+              <img src={profil} alt="ajouter une photo de profil" />
+            </div>
+            <div className="profil-lastname">
               <label htmlFor="name">Nom :</label>
               <input
                 type="text"
@@ -55,7 +60,7 @@ const Profil = () => {
                 value={lastName}
               />
             </div>
-            <div className="fistename">
+            <div className="profil-fistname">
               <label htmlFor="firstname">Prénom :</label>
               <input
                 type="text"
@@ -65,14 +70,14 @@ const Profil = () => {
                 value={firstName}
               />
             </div>
-            <div className="age">
+            <div className="profil-age">
               <label htmlFor="age">Age :</label>
               <input
                 type="text"
                 id="age"
                 name="user_age"
                 readOnly
-                value={age}
+                value={age + ' ans'}
               />
             </div>
             <div className="logout">
@@ -91,8 +96,8 @@ const Profil = () => {
                   navigate('/');
                 }}
               >
-                {' '}
-                Deconnexion
+                <img src={logout} alt="deconnexion" />
+                <span>Deconnexion</span>
               </button>
             </div>
           </form>

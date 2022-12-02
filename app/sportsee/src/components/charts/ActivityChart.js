@@ -16,7 +16,7 @@ function ActivityChart(props) {
   return (
     <>
       <h2 className="activity-chart-title">{props.title}</h2>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="99%" height="99%">
         <BarChart
           width={'100%'}
           height={'100%'}

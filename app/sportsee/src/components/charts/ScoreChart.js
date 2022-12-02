@@ -6,8 +6,8 @@ function ScoreChart(props) {
   return (
     <>
       <h2 className="score-chart-title">{props.title}</h2>
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={props.settings.width} height={props.settings.height}>
+      <ResponsiveContainer width="99%" height="99%">
+        <PieChart width="100%" height="100%">
           <Pie data={props.data} outerRadius={80} dataKey="value">
             <Cell fill="#FFFFFF" />
           </Pie>

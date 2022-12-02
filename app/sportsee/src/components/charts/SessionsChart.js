@@ -13,7 +13,7 @@ function SessionsChart(props) {
   return (
     <>
       <h2 className="sessions-chart-title">{props.title}</h2>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="99%" height="99%">
         <LineChart
           width={'100%'}
           height={'100%'}
