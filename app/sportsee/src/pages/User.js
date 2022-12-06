@@ -228,16 +228,16 @@ const User = () => {
                         activityChartCaloryDomainMin,
                         activityChartCaloryDomainMax,
                       ],
-                      width: document.getElementById('activity-chart-container')
-                        ? document.getElementById('activity-chart-container')
-                            .offsetWidth
-                        : null,
-                      height: document.getElementById(
-                        'activity-chart-container'
-                      )
-                        ? document.getElementById('activity-chart-container')
-                            .offsetHeight
-                        : null,
+                      // width: document.getElementById('activity-chart-container')
+                      //   ? document.getElementById('activity-chart-container')
+                      //       .offsetWidth
+                      //   : null,
+                      // height: document.getElementById(
+                      //   'activity-chart-container'
+                      // )
+                      //   ? document.getElementById('activity-chart-container')
+                      //       .offsetHeight
+                      //   : null,
                     }}
                     data={activityChartData}
                   />
@@ -257,16 +257,16 @@ const User = () => {
                         sessionsChartSessionDomainMin,
                         sessionsChartSessionDomainMax,
                       ],
-                      width: document.getElementById('sessions-chart-container')
-                        ? document.getElementById('sessions-chart-container')
-                            .offsetWidth
-                        : null,
-                      height: document.getElementById(
-                        'sessions-chart-container'
-                      )
-                        ? document.getElementById('sessions-chart-container')
-                            .offsetHeight
-                        : null,
+                      // width: document.getElementById('sessions-chart-container')
+                      //   ? document.getElementById('sessions-chart-container')
+                      //       .offsetWidth
+                      //   : null,
+                      // height: document.getElementById(
+                      //   'sessions-chart-container'
+                      // )
+                      //   ? document.getElementById('sessions-chart-container')
+                      //       .offsetHeight
+                      //   : null,
                     }}
                     data={sessionsChartData}
                   />
@@ -283,18 +283,18 @@ const User = () => {
                     title={'Performances'}
                     settings={{
                       performanceDomain: [0, 250],
-                      width: document.getElementById(
-                        'performance-chart-container'
-                      )
-                        ? document.getElementById('performance-chart-container')
-                            .offsetWidth
-                        : null,
-                      height: document.getElementById(
-                        'performance-chart-container'
-                      )
-                        ? document.getElementById('performance-chart-container')
-                            .offsetHeight
-                        : null,
+                      // width: document.getElementById(
+                      //   'performance-chart-container'
+                      // )
+                      //   ? document.getElementById('performance-chart-container')
+                      //       .offsetWidth
+                      //   : null,
+                      // height: document.getElementById(
+                      //   'performance-chart-container'
+                      // )
+                      //   ? document.getElementById('performance-chart-container')
+                      //       .offsetHeight
+                      //   : null,
                     }}
                     data={performanceChartData}
                   />
@@ -312,14 +312,14 @@ const User = () => {
                     settings={{
                       startAngle: startAngle,
                       endAngle: startAngle - 360 * scoreValue,
-                      width: document.getElementById('score-chart-container')
-                        ? document.getElementById('score-chart-container')
-                            .offsetWidth
-                        : null,
-                      height: document.getElementById('score-chart-container')
-                        ? document.getElementById('score-chart-container')
-                            .offsetHeight
-                        : null,
+                      // width: document.getElementById('score-chart-container')
+                      //   ? document.getElementById('score-chart-container')
+                      //       .offsetWidth
+                      //   : null,
+                      // height: document.getElementById('score-chart-container')
+                      //   ? document.getElementById('score-chart-container')
+                      //       .offsetHeight
+                      //   : null,
                     }}
                     data={[{ name: 'Score', value: scoreValue }]}
                   />

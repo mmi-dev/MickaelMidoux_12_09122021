@@ -8,16 +8,16 @@ function ScoreChart(props) {
       <h2 className="score-chart-title">{props.title}</h2>
       <ResponsiveContainer width="99%" height="99%">
         <PieChart width="100%" height="100%">
-          <Pie data={props.data} outerRadius={80} dataKey="value">
+          <Pie data={props.data} dataKey="value" outerRadius="80%" >
             <Cell fill="#FFFFFF" />
           </Pie>
           <Pie
             data={props.data}
             startAngle={props.settings.startAngle}
             endAngle={props.settings.endAngle}
-            innerRadius={80}
-            outerRadius={90}
-            cornerRadius={15}
+            innerRadius="80%" //{80}
+            outerRadius="90%" //{90}
+            cornerRadius="50%" //{15}
             paddingAngle={0}
             dataKey="value"
           >
