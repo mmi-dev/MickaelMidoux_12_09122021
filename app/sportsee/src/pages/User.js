@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import Auth from '../contexts/AuthContext';
 import UserData from '../contexts/UserDataContext';
 import useUserDetails from '../api/useUserDetails';
@@ -29,21 +29,21 @@ const User = () => {
   } = useContext(UserData);
 
   //user details
-  const userDetails = useUserDetails(2000);
+  const userDetails = useUserDetails(2000); // timoout to simulte long server response - delete or set to 0 for production
   const [firstName, setFirstName] = useState('');
   const [todayScore, setTodayScore] = useState('');
   const [keyData, setKeyData] = useState('');
 
   //user activity
-  const userActivity = useUserActivity(3000);
+  const userActivity = useUserActivity(3000); // timoout to simulte long server response - delete or set to 0 for production
   const [dailyActivity, setDailyActivity] = useState('');
 
   // user average sessions
-  const userSessions = useUserSessions(5000);
+  const userSessions = useUserSessions(5000); // timoout to simulte long server response - delete or set to 0 for production
   const [sessions, setSessions] = useState('');
 
   // user performance
-  const userPerformance = useUserPerformance(4000);
+  const userPerformance = useUserPerformance(4000); // timoout to simulte long server response - delete or set to 0 for production
   const [performanceData, setPerformanceData] = useState('');
   const [performanceName, setPerformanceName] = useState('');
 
@@ -180,13 +180,16 @@ const User = () => {
       })
     : [];
 
-  // redirection if not authentificated
+  // redirection if not authentificated or unknow user id
+  const urlUserId = useParams()
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated ) {
       navigate('/');
-    }
-  }, [isAuthenticated, navigate]);
+    } else if (urlUserId.userId !== sessionStorage.getItem('userId')) {
+      navigate('/404');
+    } 
+  }, [isAuthenticated, navigate,urlUserId]);
 
   return (
     <main>
@@ -228,16 +231,6 @@ const User = () => {
                         activityChartCaloryDomainMin,
                         activityChartCaloryDomainMax,
                       ],
-                      // width: document.getElementById('activity-chart-container')
-                      //   ? document.getElementById('activity-chart-container')
-                      //       .offsetWidth
-                      //   : null,
-                      // height: document.getElementById(
-                      //   'activity-chart-container'
-                      // )
-                      //   ? document.getElementById('activity-chart-container')
-                      //       .offsetHeight
-                      //   : null,
                     }}
                     data={activityChartData}
                   />
@@ -257,16 +250,6 @@ const User = () => {
                         sessionsChartSessionDomainMin,
                         sessionsChartSessionDomainMax,
                       ],
-                      // width: document.getElementById('sessions-chart-container')
-                      //   ? document.getElementById('sessions-chart-container')
-                      //       .offsetWidth
-                      //   : null,
-                      // height: document.getElementById(
-                      //   'sessions-chart-container'
-                      // )
-                      //   ? document.getElementById('sessions-chart-container')
-                      //       .offsetHeight
-                      //   : null,
                     }}
                     data={sessionsChartData}
                   />
@@ -283,18 +266,6 @@ const User = () => {
                     title={'Performances'}
                     settings={{
                       performanceDomain: [0, 250],
-                      // width: document.getElementById(
-                      //   'performance-chart-container'
-                      // )
-                      //   ? document.getElementById('performance-chart-container')
-                      //       .offsetWidth
-                      //   : null,
-                      // height: document.getElementById(
-                      //   'performance-chart-container'
-                      // )
-                      //   ? document.getElementById('performance-chart-container')
-                      //       .offsetHeight
-                      //   : null,
                     }}
                     data={performanceChartData}
                   />
@@ -312,14 +283,6 @@ const User = () => {
                     settings={{
                       startAngle: startAngle,
                       endAngle: startAngle - 360 * scoreValue,
-                      // width: document.getElementById('score-chart-container')
-                      //   ? document.getElementById('score-chart-container')
-                      //       .offsetWidth
-                      //   : null,
-                      // height: document.getElementById('score-chart-container')
-                      //   ? document.getElementById('score-chart-container')
-                      //       .offsetHeight
-                      //   : null,
                     }}
                     data={[{ name: 'Score', value: scoreValue }]}
                   />

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState} from 'react';
+import { useNavigate , useParams } from 'react-router-dom';
 import Auth from '../contexts/AuthContext';
 import UserData from '../contexts/UserDataContext';
 import useUserDetails from '../api/useUserDetails';
@@ -32,13 +32,16 @@ const Profil = () => {
     }
   }, [userDetailsData]);
 
-  // redirection if not authentificated
+  // redirection if not authentificated or unknow user id
+  const urlUserId = useParams()
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated ) {
       navigate('/');
-    }
-  }, [isAuthenticated, navigate]);
+    } else if (urlUserId.userId !== sessionStorage.getItem('userId')) {
+      navigate('/404');
+    } 
+  }, [isAuthenticated, navigate,urlUserId]);
 
   return (
     <main>
@@ -88,11 +91,12 @@ const Profil = () => {
                   setUserId('');
                   sessionStorage.removeItem('isAuthenticated');
                   sessionStorage.removeItem('userId');
-
+                  // reset state
                   setUserDetailsData();
                   setUserActivityData();
                   setUserPerformanceData();
                   setUserSessionsData();
+                  // redirect to home
                   navigate('/');
                 }}
               >

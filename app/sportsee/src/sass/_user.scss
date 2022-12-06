@@ -23,7 +23,7 @@
   display: grid;
   align-items: stretch;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 1fr;
+  grid-auto-rows: 5fr 4fr;
   grid-column: 1;
   grid-gap: 30px;
   flex-grow: 3;
