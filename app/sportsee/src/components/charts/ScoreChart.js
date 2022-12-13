@@ -2,13 +2,32 @@ import React from 'react';
 import './scoreChart.scss';
 import { PieChart, Pie, Label, Cell, ResponsiveContainer } from 'recharts';
 
+/**
+ * @component
+ * @description Pie chart to visualize user score
+ * @param {Object} props
+ * @param {string} props.title title of the graph
+ * @param {Array} props.data {}data value for the recharts graph component
+ * @param {Object} props.settings {}settings for the recharts graph component
+ * @param {integer} props.settings.startAngle Angular graph start angle
+ * @param {integer} props.settings.endAngle Angular graph start angle
+ * @example
+ * <ScoreChart
+    title={'Ex Score'}
+    settings={{
+      startAngle: 180,
+      endAngle: 136.8,
+    }}
+    data={[{name: "Score", value: 0.12}]}
+  />
+ */
 function ScoreChart(props) {
   return (
     <>
       <h2 className="score-chart-title">{props.title}</h2>
       <ResponsiveContainer width="99%" height="99%">
         <PieChart width="100%" height="100%">
-          <Pie data={props.data} dataKey="value" outerRadius="80%" >
+          <Pie data={props.data} dataKey="value" outerRadius="80%">
             <Cell fill="#FFFFFF" />
           </Pie>
           <Pie

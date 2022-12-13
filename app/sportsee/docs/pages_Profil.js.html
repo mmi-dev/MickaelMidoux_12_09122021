@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>pages/Profil.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/mmi-dev/MickaelMidoux_12_09122021" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h3>Global</h3><ul><li><a href="global.html#ActivityChart">ActivityChart</a></li><li><a href="global.html#Auth">Auth</a></li><li><a href="global.html#Community">Community</a></li><li><a href="global.html#KeyData">KeyData</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#NotFound">NotFound</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#Profil">Profil</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#SessionsChart">SessionsChart</a></li><li><a href="global.html#Settings">Settings</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#User">User</a></li><li><a href="global.html#UserData">UserData</a></li><li><a href="global.html#useUserActivity">useUserActivity</a></li><li><a href="global.html#useUserDetails">useUserDetails</a></li><li><a href="global.html#useUserPerformance">useUserPerformance</a></li><li><a href="global.html#useUserSessions">useUserSessions</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/Profil.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import Auth from '../contexts/AuthContext';
+import UserData from '../contexts/UserDataContext';
+import useUserDetails from '../api/useUserDetails';
+import SimpleLoader from '../components/loader/SimpleLoader';
+import logout from '../assets/icons/logout.svg';
+import profil from '../assets/icons/profil-picture.svg';
+
+/**
+ * @category Pages
+ * @description User profil page
+ * provide user personnal details &amp; logout link
+ */
+const Profil = () => {
+  const { isAuthenticated, setIsAuthenticated } = useContext(Auth);
+  const { setUserId } = useContext(Auth);
+  const {
+    userDetailsData,
+    setUserDetailsData,
+    setUserActivityData,
+    setUserPerformanceData,
+    setUserSessionsData,
+  } = useContext(UserData);
+
+  const userDetails = useUserDetails(2000);
+
+  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [age, setAge] = useState('');
+
+  useEffect(() => {
+    if (userDetailsData) {
+      setLastName(userDetailsData.data.userInfos.lastName);
+      setFirstName(userDetailsData.data.userInfos.firstName);
+      setAge(userDetailsData.data.userInfos.age);
+    }
+  }, [userDetailsData]);
+
+  // redirection if not authentificated or unknow user id
+  const urlUserId = useParams();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/');
+    } else if (urlUserId.userId !== sessionStorage.getItem('userId')) {
+      navigate('/404');
+    }
+  }, [isAuthenticated, navigate, urlUserId]);
+
+  return (
+    &lt;main>
+      {userDetails.loading &amp;&amp; &lt;SimpleLoader />}
+      {!userDetails.loading &amp;&amp; (
+        &lt;>
+          &lt;h1>Profil&lt;/h1>
+          &lt;form className="profil-data">
+            &lt;div className="profil-picture">
+              &lt;img src={profil} alt="ajouter une photo de profil" />
+            &lt;/div>
+            &lt;div className="profil-lastname">
+              &lt;label htmlFor="name">Nom :&lt;/label>
+              &lt;input
+                type="text"
+                id="name"
+                name="user_name"
+                readOnly
+                value={lastName}
+              />
+            &lt;/div>
+            &lt;div className="profil-fistname">
+              &lt;label htmlFor="firstname">Prénom :&lt;/label>
+              &lt;input
+                type="text"
+                id="firstname"
+                name="user_firstname"
+                readOnly
+                value={firstName}
+              />
+            &lt;/div>
+            &lt;div className="profil-age">
+              &lt;label htmlFor="age">Age :&lt;/label>
+              &lt;input
+                type="text"
+                id="age"
+                name="user_age"
+                readOnly
+                value={age + ' ans'}
+              />
+            &lt;/div>
+            &lt;div className="logout">
+              &lt;button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsAuthenticated(false);
+                  setUserId('');
+                  sessionStorage.removeItem('isAuthenticated');
+                  sessionStorage.removeItem('userId');
+                  // reset state
+                  setUserDetailsData();
+                  setUserActivityData();
+                  setUserPerformanceData();
+                  setUserSessionsData();
+                  // redirect to home
+                  navigate('/');
+                }}
+              >
+                &lt;img src={logout} alt="deconnexion" />
+                &lt;span>Deconnexion&lt;/span>
+              &lt;/button>
+            &lt;/div>
+          &lt;/form>
+        &lt;/>
+      )}
+    &lt;/main>
+  );
+};
+
+export default Profil;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.0</a> on Tue Dec 13 2022 17:24:15 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

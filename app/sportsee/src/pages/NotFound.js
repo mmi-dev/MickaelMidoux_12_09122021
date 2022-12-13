@@ -1,6 +1,10 @@
 import React from 'react';
 import Error404 from '../assets/img/404.svg';
 
+/**
+ * @category Pages
+ * @description 404 error page
+ */
 const NotFound = () => {
   return (
     <main>

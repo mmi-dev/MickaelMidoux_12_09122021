@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import Auth from '../contexts/AuthContext';
 import user from '../assets/icons/user.svg';
 
+/**
+ * @category Pages
+ * @description user connection page
+ * @description for dev purpose: only 2 users for the moment without password required
+ */
 const Login = () => {
   const { setIsAuthenticated, setUserId } = useContext(Auth);
 

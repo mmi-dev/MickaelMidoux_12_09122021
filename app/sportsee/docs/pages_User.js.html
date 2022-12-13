@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>pages/User.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/mmi-dev/MickaelMidoux_12_09122021" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h3>Global</h3><ul><li><a href="global.html#ActivityChart">ActivityChart</a></li><li><a href="global.html#Auth">Auth</a></li><li><a href="global.html#Community">Community</a></li><li><a href="global.html#KeyData">KeyData</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#NotFound">NotFound</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#Profil">Profil</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#SessionsChart">SessionsChart</a></li><li><a href="global.html#Settings">Settings</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#User">User</a></li><li><a href="global.html#UserData">UserData</a></li><li><a href="global.html#useUserActivity">useUserActivity</a></li><li><a href="global.html#useUserDetails">useUserDetails</a></li><li><a href="global.html#useUserPerformance">useUserPerformance</a></li><li><a href="global.html#useUserSessions">useUserSessions</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/User.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
+import Auth from '../contexts/AuthContext';
+import UserData from '../contexts/UserDataContext';
+import useUserDetails from '../api/useUserDetails';
+import useUserActivity from '../api/useUserActivity';
+import useUserSessions from '../api/useUserSessions';
+import useUserPerformance from '../api/useUserPerformance';
+import SimpleLoader from '../components/loader/SimpleLoader';
+import calorieCount from '../assets/icons/calories-icon.png';
+import proteinCount from '../assets/icons/protein-icon.png';
+import carbohydrateCount from '../assets/icons/carbs-icon.png';
+import lipidCount from '../assets/icons/fat-icon.png';
+import ActivityChart from '../components/charts/ActivityChart';
+import SessionsChart from '../components/charts/SessionsChart';
+import PerformanceChart from '../components/charts/PerformanceChart';
+import ScoreChart from '../components/charts/ScoreChart';
+import KeyData from '../components/KeyData';
+import keyDataRef from '../data/keyDataRef.json';
+
+/**
+ * @category Pages
+ * @description user activities dashboard
+ *
+ */
+const User = () => {
+  const { isAuthenticated } = useContext(Auth);
+
+  const {
+    userDetailsData,
+    userActivityData,
+    userPerformanceData,
+    userSessionsData,
+  } = useContext(UserData);
+
+  //user details
+  const userDetails = useUserDetails(2000); // timoout to simulte long server response - delete or set to 0 for production
+  const [firstName, setFirstName] = useState('');
+  const [todayScore, setTodayScore] = useState('');
+  const [keyData, setKeyData] = useState('');
+
+  //user activity
+  const userActivity = useUserActivity(3000); // timoout to simulte long server response - delete or set to 0 for production
+  const [dailyActivity, setDailyActivity] = useState('');
+
+  // user average sessions
+  const userSessions = useUserSessions(5000); // timoout to simulte long server response - delete or set to 0 for production
+  const [sessions, setSessions] = useState('');
+
+  // user performance
+  const userPerformance = useUserPerformance(4000); // timoout to simulte long server response - delete or set to 0 for production
+  const [performanceData, setPerformanceData] = useState('');
+  const [performanceName, setPerformanceName] = useState('');
+
+  useEffect(() => {
+    if (userDetailsData) {
+      setFirstName(userDetailsData.data.userInfos.firstName);
+      setTodayScore(userDetailsData.data.score);
+      setKeyData(userDetailsData.data.keyData);
+    }
+    if (userActivityData) {
+      setDailyActivity(userActivityData.data.sessions);
+    }
+    if (userSessionsData) {
+      setSessions(userSessionsData.data.sessions);
+    }
+    if (userPerformanceData) {
+      setPerformanceData(userPerformanceData.data.data);
+      setPerformanceName(userPerformanceData.data.kind);
+    }
+  }, [
+    userDetailsData,
+    userActivityData,
+    userPerformanceData,
+    userSessionsData,
+  ]);
+
+  // category
+  const [searchParams] = useSearchParams();
+  let category = searchParams.get('category');
+
+  //  activity chart settings
+  const activityChartData = dailyActivity
+    ? dailyActivity.map((activity, i) => {
+        return {
+          date: new Date(activity.day).getDate().toString(),
+          'Poids (kg)': activity.kilogram,
+          'Calories brulées (kCal)': activity.calories,
+        };
+      })
+    : null;
+  const activityChartWeightDomainMin = dailyActivity
+    ? Math.min(
+        ...dailyActivity.map((activity, i) => {
+          return activity.kilogram;
+        })
+      ) - 1
+    : null;
+  const activityChartWeightDomainMax = dailyActivity
+    ? Math.max(
+        ...dailyActivity.map((activity, i) => {
+          return activity.kilogram;
+        })
+      ) + 1
+    : null;
+  const activityChartCaloryDomainMin = dailyActivity
+    ? Math.min(
+        ...dailyActivity.map((activity, i) => {
+          return activity.calories;
+        })
+      ) * 0.6
+    : null;
+  const activityChartCaloryDomainMax = dailyActivity
+    ? Math.max(
+        ...dailyActivity.map((activity, i) => {
+          return activity.calories;
+        })
+      ) * 1.1
+    : null;
+
+  // session chart settings
+  const weekDays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  const sessionsChartData = sessions
+    ? sessions.map((session, i) => {
+        return {
+          day: weekDays[session.day - 1],
+          time: session.sessionLength,
+        };
+      })
+    : null;
+  const sessionsChartSessionDomainMin = sessions
+    ? Math.min(
+        ...sessions.map((session, i) => {
+          return session.sessionLength;
+        })
+      ) * 0.6
+    : null;
+  const sessionsChartSessionDomainMax = sessions
+    ? Math.max(
+        ...sessions.map((session, i) => {
+          return session.sessionLength;
+        })
+      ) * 1.1
+    : null;
+
+  // performance chart settings
+  const performanceNameTraduction = {
+    cardio: 'Cardio',
+    energy: 'Energie',
+    endurance: 'Endurance',
+    strength: 'Force',
+    speed: 'Vitesse',
+    intensity: 'Intensité',
+  };
+  const performanceChartData = performanceData
+    ? performanceData.map((performance, i) => {
+        return {
+          activity:
+            performanceNameTraduction[performanceName[performance.kind]],
+          score: performance.value,
+        };
+      })
+    : null;
+
+  // score chart settings
+  const startAngle = 180;
+  const scoreValue = todayScore;
+
+  // key data settings
+  const keyDataIconsMapping = {
+    calorieCount: calorieCount,
+    proteinCount: proteinCount,
+    carbohydrateCount: carbohydrateCount,
+    lipidCount: lipidCount,
+  };
+  const keyDataList = keyData
+    ? Object.keys(keyData).map((key) => {
+        return {
+          key: key,
+          value: keyData[key],
+          name: keyDataRef[key].name,
+          unit: keyDataRef[key].unit,
+          icon: keyDataIconsMapping[key],
+        };
+      })
+    : [];
+
+  // redirection if not authentificated or unknow user id
+  const urlUserId = useParams();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/');
+    } else if (urlUserId.userId !== sessionStorage.getItem('userId')) {
+      navigate('/404');
+    }
+  }, [isAuthenticated, navigate, urlUserId]);
+
+  return (
+    &lt;main>
+      {userDetails.loading &amp;&amp; &lt;SimpleLoader />}
+      {!userDetails.loading &amp;&amp; (
+        &lt;>
+          &lt;div className="dashboard-title">
+            &lt;h1>
+              Bonjour &lt;span className="firstname">{firstName}&lt;/span>
+            &lt;/h1>
+
+            &lt;div className="congratulations-message">
+              {category ? (
+                &lt;h3 className="congratulations-category">{category}&lt;/h3>
+              ) : null}
+              &lt;span className="congratulations-text">
+                Félicitation ! Vous avez explosé vos objectifs hier &amp;#128079;
+              &lt;/span>
+            &lt;/div>
+          &lt;/div>
+          &lt;div className="dashboard-content">
+            &lt;article id="charts" className="dashboard-charts">
+              {/* activity charts */}
+              &lt;section
+                id="activity-chart-container"
+                className="activity-chart-container"
+                style={{ position: 'relative', width: '100%' }}
+              >
+                {userActivity.loading &amp;&amp; &lt;SimpleLoader />}
+                {!userActivity.loading &amp;&amp; (
+                  &lt;ActivityChart
+                    title="Activité quotidienne"
+                    settings={{
+                      weightDomain: [
+                        activityChartWeightDomainMin,
+                        activityChartWeightDomainMax,
+                      ],
+                      caloryDomain: [
+                        activityChartCaloryDomainMin,
+                        activityChartCaloryDomainMax,
+                      ],
+                    }}
+                    data={activityChartData}
+                  />
+                )}
+              &lt;/section>
+              {/* sessions charts */}
+              &lt;section
+                id="sessions-chart-container"
+                className="sessions-chart-container"
+              >
+                {userSessions.loading &amp;&amp; &lt;SimpleLoader />}
+                {!userSessions.loading &amp;&amp; (
+                  &lt;SessionsChart
+                    title={'Durée moyanne des sessions'}
+                    settings={{
+                      sessionDomain: [
+                        sessionsChartSessionDomainMin,
+                        sessionsChartSessionDomainMax,
+                      ],
+                    }}
+                    data={sessionsChartData}
+                  />
+                )}
+              &lt;/section>
+              {/* performane charts */}
+              &lt;section
+                id="performance-chart-container"
+                className="performance-chart-container"
+              >
+                {userPerformance.loading &amp;&amp; &lt;SimpleLoader />}
+                {!userPerformance.loading &amp;&amp; (
+                  &lt;PerformanceChart
+                    title={'Performances'}
+                    settings={{
+                      performanceDomain: [0, 250],
+                    }}
+                    data={performanceChartData}
+                  />
+                )}
+              &lt;/section>
+              {/* score charts */}
+              &lt;section
+                id="score-chart-container"
+                className="score-chart-container"
+              >
+                {userDetails.loading &amp;&amp; &lt;SimpleLoader />}
+                {!userDetails.loading &amp;&amp; (
+                  &lt;ScoreChart
+                    title={'Score'}
+                    settings={{
+                      startAngle: startAngle,
+                      endAngle: startAngle - 360 * scoreValue,
+                    }}
+                    data={[{ name: 'Score', value: scoreValue }]}
+                  />
+                )}
+              &lt;/section>
+            &lt;/article>
+            &lt;aside id="keydata" className="dashboard-keydata">
+              {userDetails.loading &amp;&amp; &lt;SimpleLoader />}
+              {!userDetails.loading &amp;&amp; (
+                &lt;>
+                  &lt;KeyData title={'Chiffres clés'} data={keyDataList} />
+                &lt;/>
+              )}
+            &lt;/aside>
+          &lt;/div>
+        &lt;/>
+      )}
+    &lt;/main>
+  );
+};
+
+export default User;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.0</a> on Tue Dec 13 2022 17:24:15 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

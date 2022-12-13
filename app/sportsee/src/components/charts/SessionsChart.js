@@ -9,6 +9,26 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+/**
+ * @component
+ * @description Line chart to visualize user sessions
+ * @param {Object} props
+ * @param {string} props.title title of the graph
+ * @param {Array} props.data {}data value for the recharts graph component
+ * @param {Object} props.settings {}settings for the recharts graph component
+ * @param {number[]} props.settings.sessionDomain Y axis domain for session value [min, max]
+ * @example
+ * <SessionsChart
+      title={'Durée moyanne des sessions'}
+      settings={{
+        sessionDomain: [
+          sessionsChartSessionDomainMin,
+          sessionsChartSessionDomainMax,
+        ],
+      }}
+      data={sessionsChartData}
+    />
+ */
 function SessionsChart(props) {
   return (
     <>

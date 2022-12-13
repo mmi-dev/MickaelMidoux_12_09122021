@@ -18,6 +18,11 @@ import ScoreChart from '../components/charts/ScoreChart';
 import KeyData from '../components/KeyData';
 import keyDataRef from '../data/keyDataRef.json';
 
+/**
+ * @category Pages
+ * @description user activities dashboard
+ *
+ */
 const User = () => {
   const { isAuthenticated } = useContext(Auth);
 
@@ -181,15 +186,15 @@ const User = () => {
     : [];
 
   // redirection if not authentificated or unknow user id
-  const urlUserId = useParams()
+  const urlUserId = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isAuthenticated ) {
+    if (!isAuthenticated) {
       navigate('/');
     } else if (urlUserId.userId !== sessionStorage.getItem('userId')) {
       navigate('/404');
-    } 
-  }, [isAuthenticated, navigate,urlUserId]);
+    }
+  }, [isAuthenticated, navigate, urlUserId]);
 
   return (
     <main>

@@ -9,6 +9,32 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+/**
+ * @component
+ * @description Radar chart to visualize user performance
+ * @param {Object} props
+ * @param {string} props.title title of the graph
+ * @param {object[]} props.data {}data value for the recharts graph component
+ * @param {string} props.data[].activity activity name
+ * @param {number} props.data[].score activity score
+ * @param {Object} props.settings {}settings for the recharts graph component
+ * @param {number[]} props.settings.performanceDomain Y axis domain for performance value [min, max]
+ * @example
+  <PerformanceChart
+    title={'Ex Performances'}
+    settings={{
+      performanceDomain: [0, 250],
+    }}
+    data={
+      {activity: "Cardio", score: 80}
+      {activity: "Energie", score: 120}
+      {activity: "Endurance", score: 140}
+      {activity: "Force", score: 50}
+      {activity: "Vitesse", score: 200}
+      {activity: "Intensité", score: 90}
+    }
+  />
+ */
 function PerformanceChart(props) {
   return (
     <>

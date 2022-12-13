@@ -12,6 +12,36 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+/**
+ * @component
+ * @description Bar chart to visualize user daily activity
+ * @param {Object} props
+ * @param {string} props.title title of the graph
+ * @param {Object} props.settings {}settings for the recharts graph component
+ * @param {number[]} props.settings.weightDomain Y axis domain for weight value [min, max]
+ * @param {number[]} props.settings.caloryDomain Y axis domain for calory value [min, max]
+ * @param {object[]} props.data
+ * @param {number} props.data[].Poids\u0020(kg) user calories burned
+ * @param {number} props.data[].[Poids_kg] user weight
+ * @param {number} props.data.date activity weekday number
+ * @example
+ * <ActivityChart
+    title="Example Activité quotidienne"
+    settings={{
+      weightDomain: [75,82],
+      caloryDomain: [95,430],
+    }}
+    data={
+      {Calories brulées (kCal): 240, Poids (kg): 80, date:1}
+      {Calories brulées (kCal): 220, Poids (kg): 80, date:2}
+      {Calories brulées (kCal): 280, Poids (kg): 81, date:3}
+      {Calories brulées (kCal): 290, Poids (kg): 81, date:4}
+      {Calories brulées (kCal): 160, Poids (kg): 80, date:5}
+      {Calories brulées (kCal): 162, Poids (kg): 78, date:6}
+      {Calories brulées (kCal): 390, Poids (kg): 76, date:7}
+    }
+  />
+*/
 function ActivityChart(props) {
   return (
     <>

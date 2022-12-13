@@ -1,5 +1,5 @@
 # SportSee
-![SportSee logo](app/sportsee/src/assets/logo/logo.png)
+![SportSee logo](/app/sportsee/src/assets/logo/logo.png)
 
 ## 1. General information
 
@@ -60,5 +60,5 @@ If you are working with several versions of NodeJS, we recommend you install [nv
 ## 3. Learn more
 
 - API [GitHub repository](https://github.com/OpenClassrooms-Student-Center/P9-front-end-dashboard)
-- Front-end [documentation](https://)
+- Front-end [documentation](/app/sportsee/docs/)
 

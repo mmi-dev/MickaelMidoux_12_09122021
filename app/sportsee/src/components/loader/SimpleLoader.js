@@ -1,6 +1,9 @@
 import React from 'react';
 import './simpleLoader.css';
 
+/**
+ * @description spinner loader
+ */
 export default function SimpleLoader() {
   return (
     <div className="spinner-container">

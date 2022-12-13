@@ -1,0 +1,41 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "source": {
+    "include": ["src"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "default": {
+      "useLongnameInNav": true
+    }
+  },
+  "opts": {
+    "destination": "docs",
+    "recurse": true,
+    "verbose": true,
+    "readme": "../../README.md",
+    "template": "node_modules/docdash"
+  },
+  "docdash": {
+    "static": true,
+    "sorts": true,
+    "search": false,
+    "collapse": true,
+    "typedefs": true,
+    "removeQuotes": "none",
+    "scripts": [],
+    "menu": {
+      "Github repo": {
+        "href": "https://github.com/mmi-dev/MickaelMidoux_12_09122021",
+        "target": "_blank",
+        "class": "menu-item",
+        "id": "repository"
+      }
+    }
+  }
+}
