@@ -52,10 +52,19 @@
         margin-left: 10px;
       }
     }
-    & .recharts-default-tooltip {
+    &-default-tooltip {
       background-color: #e60000 !important;
+      padding: 0 10px !important;
+      border: 0px !important;
     }
     &-tooltip {
+      &-wrapper {
+        border: none !important;
+        margin:0 20px;
+        &:focus-visible{
+          outline: none;;
+        }
+      }
       &-label {
         display: none;
       }
@@ -67,12 +76,12 @@
       }
       &-item-value {
         color: white;
-        font-size: 7px;
+        font-size: 8px;
         line-height: 24px;
       }
       &-item-unit {
         color: white;
-        font-size: 7px;
+        font-size: 8px;
         line-height: 24px;
       }
     }

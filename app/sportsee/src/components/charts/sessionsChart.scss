@@ -41,13 +41,24 @@
       mix-blend-mode: normal;
       opacity: 0.5;
     }
-    & .recharts-default-tooltip {
+    &-tooltip-wrapper {
+      background-color: #f444ff !important;
+      border: 0px !important;
+    }
+    &-default-tooltip {
       background-color: #fff !important;
+      padding: 0 7px !important;
       border: 0px !important;
     }
     &-tooltip {
       &-wrapper {
         border: none !important;
+        &:focus-visible{
+          outline: none;;
+        }
+      }
+      &-cursor{
+        display:none;
       }
       &-label {
         display: none;
@@ -60,12 +71,12 @@
       }
       &-item-value {
         color: black;
-        font-size: 7px;
+        font-size: 8px;
         line-height: 24px;
       }
       &-item-unit {
         color: black;
-        font-size: 7px;
+        font-size: 8px;
         line-height: 24px;
       }
     }
