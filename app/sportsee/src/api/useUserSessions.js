@@ -16,9 +16,9 @@ function useUserSessions(timeout = 0) {
   const [fetchError, setFetchError] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  /** 
-   * end point URL 
-  */
+  /**
+   * end point URL
+   */
   const API_URL = 'http://localhost:3001/user/' + userId + '/average-sessions';
 
   useEffect(() => {

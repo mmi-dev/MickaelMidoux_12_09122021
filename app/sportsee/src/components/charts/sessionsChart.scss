@@ -53,12 +53,12 @@
     &-tooltip {
       &-wrapper {
         border: none !important;
-        &:focus-visible{
-          outline: none;;
+        &:focus-visible {
+          outline: none;
         }
       }
-      &-cursor{
-        display:none;
+      &-cursor {
+        display: none;
       }
       &-label {
         display: none;

@@ -45,8 +45,15 @@ function SessionsChart(props) {
             unit="min"
             type="monotone"
             dataKey="time"
-            stroke="#ffffff"
+            stroke="#fff4ff"
+            strokeWidth={3}
             dot={false}
+            activeDot={{
+              r: 4,
+              fill: '#fff4ff',
+              stroke: 'rgba(255,255,255,0.4)',
+              strokeWidth: 10,
+            }}
           />
           <XAxis dataKey="day" />
           <YAxis hide={true} domain={props.settings.sessionDomain} />
