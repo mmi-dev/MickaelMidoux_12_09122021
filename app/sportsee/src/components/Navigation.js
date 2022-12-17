@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import Auth from '../contexts/AuthContext';
 
+/**
+ * @description navigation menu
+ */
 export default function Navigation() {
   const { isAuthenticated } = useContext(Auth);
   const { userId } = useContext(Auth);

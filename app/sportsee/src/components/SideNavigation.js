@@ -6,6 +6,9 @@ import cycling from '../assets/icons/cycling.png';
 import bodybuilding from '../assets/icons/bodybuilding.png';
 import Auth from '../contexts/AuthContext';
 
+/**
+ * @description options filter buttons menu
+ */
 export default function SideNavigation() {
   const { isAuthenticated } = useContext(Auth);
   const { userId } = useContext(Auth);
