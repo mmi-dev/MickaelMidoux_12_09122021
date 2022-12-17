@@ -1,0 +1,58 @@
+#performance-chart-container {
+  position: relative;
+  & .performance-chart-title {
+    display: none;
+  }
+  & .recharts {
+    &-polar {
+      &-grid-angle {
+        display: none;
+      }
+
+      &-angle-axis-tick {
+        &-value {
+          fill: #ffffff;
+          font-size: 12px;
+        }
+      }
+    }
+    &-responsive-container {
+      background-color: #000000;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+    &-wrapper {
+      background-color: #000000;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+    & .recharts-default-tooltip {
+      background-color: #fff !important;
+      border: 0px !important;
+    }
+    &-tooltip {
+      &-wrapper {
+        border: none !important;
+      }
+      &-label {
+        display: none;
+      }
+      &-item-name {
+        display: none;
+      }
+      &-item-separator {
+        display: none;
+      }
+      &-item-value {
+        color: black;
+        font-size: 7px;
+        line-height: 24px;
+      }
+      &-item-unit {
+        color: black;
+        font-size: 7px;
+        line-height: 24px;
+      }
+    }
+  }
+}
