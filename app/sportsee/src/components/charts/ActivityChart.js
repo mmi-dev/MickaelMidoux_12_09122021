@@ -21,8 +21,8 @@ import {
  * @param {number[]} props.settings.weightDomain Y axis domain for weight value [min, max]
  * @param {number[]} props.settings.caloryDomain Y axis domain for calory value [min, max]
  * @param {object[]} props.data
- * @param {number} props.data[].Poids\u0020(kg) user calories burned
- * @param {number} props.data[].[Poids_kg] user weight
+ * @param {number} props.data[].Calories_kCal user calories burned
+ * @param {number} props.data[].Poids_kg user weight
  * @param {number} props.data.date activity weekday number
  * @example
  * <ActivityChart
