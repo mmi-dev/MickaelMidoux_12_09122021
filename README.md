@@ -1,4 +1,5 @@
 # SportSee
+
 ![SportSee logo](/app/sportsee/src/assets/logo/logo.png)
 
 ## 1. General information
@@ -24,36 +25,36 @@ If you are working with several versions of NodeJS, we recommend you install [nv
 ### 2.3 Launching the Back-End
 
 - Move to the back-end directory
-    ```sh
-   cd ./api
-   ```
+  ```sh
+  cd ./api
+  ```
 - Initialize the back-end project & dependencies
-    ```sh
-   npm i
-   ```
+  ```sh
+  npm i
+  ```
 - Run the project (port 3001 by default)
-   ```sh
-   npm start
-   ```
+  ```sh
+  npm start
+  ```
 - Open the project
-    visit `http://localhost:3000`
+  visit `http://localhost:3001`
 
 ### 2.4 Launching the Front-End
 
 - Move to the front-end directory
-    ```sh
-   cd ./app/sportsee
-   ```
+  ```sh
+  cd ./app/sportsee
+  ```
 - Initialize the front-end project & dependencies
-    ```sh
-   npm i
-   ```
+  ```sh
+  npm i
+  ```
 - Run the project (port 3000 by default)
-   ```sh
-   npm start
-   ```
+  ```sh
+  npm start
+  ```
 - Open the project
-    visit `http://localhost:3000`
+  visit `http://localhost:3000`
 
 ---
 
@@ -61,4 +62,3 @@ If you are working with several versions of NodeJS, we recommend you install [nv
 
 - API [GitHub repository](https://github.com/OpenClassrooms-Student-Center/P9-front-end-dashboard)
 - Front-end [documentation](/app/sportsee/docs/)
-
