@@ -34,21 +34,21 @@ const User = () => {
   } = useContext(UserData);
 
   //user details
-  const userDetails = useUserDetails(2000); // timoout to simulte long server response - delete or set to 0 for production
+  const userDetails = useUserDetails();
   const [firstName, setFirstName] = useState('');
   const [todayScore, setTodayScore] = useState('');
   const [keyData, setKeyData] = useState('');
 
   //user activity
-  const userActivity = useUserActivity(3000); // timoout to simulte long server response - delete or set to 0 for production
+  const userActivity = useUserActivity();
   const [dailyActivity, setDailyActivity] = useState('');
 
   // user average sessions
-  const userSessions = useUserSessions(5000); // timoout to simulte long server response - delete or set to 0 for production
+  const userSessions = useUserSessions();
   const [sessions, setSessions] = useState('');
 
   // user performance
-  const userPerformance = useUserPerformance(4000); // timoout to simulte long server response - delete or set to 0 for production
+  const userPerformance = useUserPerformance();
   const [performanceData, setPerformanceData] = useState('');
   const [performanceName, setPerformanceName] = useState('');
 

@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import Auth from '../contexts/AuthContext';
 import UserData from '../contexts/UserDataContext';
 
+import axios from '../api/axios';
+
 /**
  * @category Api
  * @description Import API data from the end point {api url}/user/:id/average-sessions
@@ -19,30 +21,24 @@ function useUserSessions(timeout = 0) {
   /**
    * end point URL
    */
-  const API_URL = 'http://localhost:3001/user/' + userId + '/average-sessions';
+  const API_URL = 'user/' + userId + '/average-sessions';
 
   useEffect(() => {
     const fetchApi = async () => {
       try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw Error('Did not receive expected data');
-        const datas = await response.json();
-        setUserSessionsData(datas);
-        setFetchError(null);
+        const response = await axios.get(API_URL);
+        if (response.data) {
+          const datas = response.data;
+          setUserSessionsData(datas);
+          setFetchError(null);
+        }
       } catch (err) {
-        setFetchError(err.message);
+        setFetchError(err.response);
       } finally {
         setIsLoading(false);
       }
     };
-
-    if (!userSessionsData) {
-      setTimeout(() => {
-        (async () => await fetchApi())();
-      }, timeout);
-    } else {
-      setIsLoading(false);
-    }
+    fetchApi();
   }, []);
 
   return { data: userSessionsData, error: fetchError, loading: isLoading };
