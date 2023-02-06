@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import Auth from '../contexts/AuthContext';
 import UserData from '../contexts/UserDataContext';
+
 import useUserDetails from '../api/useUserDetails';
 import useUserActivity from '../api/useUserActivity';
 import useUserSessions from '../api/useUserSessions';
 import useUserPerformance from '../api/useUserPerformance';
+
 import SimpleLoader from '../components/loader/SimpleLoader';
 import calorieCount from '../assets/icons/calories-icon.png';
 import proteinCount from '../assets/icons/protein-icon.png';
@@ -17,6 +19,9 @@ import PerformanceChart from '../components/charts/PerformanceChart';
 import ScoreChart from '../components/charts/ScoreChart';
 import KeyData from '../components/KeyData';
 import keyDataRef from '../data/keyDataRef.json';
+
+// import getMockedData from '../mocks/mokedData';
+// console.log(getMockedData(12));
 
 /**
  * @category Pages
