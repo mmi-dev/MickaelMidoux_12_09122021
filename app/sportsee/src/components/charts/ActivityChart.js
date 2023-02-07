@@ -26,7 +26,7 @@ import {
  * @param {number} props.data.date activity weekday number
  * @example
  * <ActivityChart
-    title="Example Activité quotidienne"
+    title="Ex Activité quotidienne"
     settings={{
       weightDomain: [75,82],
       caloryDomain: [95,430],

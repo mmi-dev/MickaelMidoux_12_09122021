@@ -21,7 +21,7 @@ import {
  * @param {number[]} props.settings.performanceDomain Y axis domain for performance value [min, max]
  * @example
   <PerformanceChart
-    title={'Ex Performances'}
+    title="Ex Performances"
     settings={{
       performanceDomain: [0, 250],
     }}

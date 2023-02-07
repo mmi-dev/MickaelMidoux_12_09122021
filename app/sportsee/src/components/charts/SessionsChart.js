@@ -19,14 +19,19 @@ import {
  * @param {number[]} props.settings.sessionDomain Y axis domain for session value [min, max]
  * @example
  * <SessionsChart
-      title={'Durée moyanne des sessions'}
+      title="Ex Durée moyanne des sessions"
       settings={{
-        sessionDomain: [
-          sessionsChartSessionDomainMin,
-          sessionsChartSessionDomainMax,
-        ],
+        sessionDomain: [18, 55],
       }}
-      data={sessionsChartData}
+      data={
+        {day: "L", time: 30}
+        {day: "M", time: 40}
+        {day: "M", time: 50}
+        {day: "J", time: 30}
+        {day: "V", time: 30}
+        {day: "S", time: 50}
+        {day: "D", time: 50}
+      }
     />
  */
 function SessionsChart(props) {

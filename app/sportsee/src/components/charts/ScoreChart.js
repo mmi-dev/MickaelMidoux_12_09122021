@@ -13,7 +13,7 @@ import { PieChart, Pie, Label, Cell, ResponsiveContainer } from 'recharts';
  * @param {integer} props.settings.endAngle Angular graph start angle
  * @example
  * <ScoreChart
-    title={'Ex Score'}
+    title="Ex Score"
     settings={{
       startAngle: 180,
       endAngle: 136.8,

@@ -2,15 +2,16 @@ import { useState, useEffect, useContext } from 'react';
 import Auth from '../contexts/AuthContext';
 import UserData from '../contexts/UserDataContext';
 
+import axios from '../api/axios';
+
 /**
  * @category Api
  * @description Import API data from the end point {api url}/user/:id/activity
- * @param {number} timeout Timeout to simulate server response delay (to be deleted or set to 0 for production)
  * @return {object} user activity details
  * @return {array} error
  * @return {boolean} loading statut
  */
-function useUserActivity(timeout = 0) {
+function useUserActivity() {
   const { userActivityData, setUserActivityData } = useContext(UserData);
   const { userId } = useContext(Auth);
   const [fetchError, setFetchError] = useState([]);
@@ -19,30 +20,24 @@ function useUserActivity(timeout = 0) {
   /**
    * end point URL
    */
-  const API_URL = 'http://localhost:3001/user/' + userId + '/activity';
+  const API_URL = 'user/' + userId + '/activity';
 
   useEffect(() => {
     const fetchApi = async () => {
       try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw Error('Did not receive expected data');
-        const datas = await response.json();
-        setUserActivityData(datas);
-        setFetchError(null);
+        const response = await axios.get(API_URL);
+        if (response.data) {
+          const datas = response.data;
+          setUserActivityData(datas);
+          setFetchError(null);
+        }
       } catch (err) {
-        setFetchError(err.message);
+        setFetchError(err.response);
       } finally {
         setIsLoading(false);
       }
     };
-
-    if (!userActivityData) {
-      setTimeout(() => {
-        (async () => await fetchApi())();
-      }, timeout);
-    } else {
-      setIsLoading(false);
-    }
+    fetchApi();
   }, []);
 
   return { data: userActivityData, error: fetchError, loading: isLoading };
